@@ -60,7 +60,7 @@ const UserDashboard = () => {
     <div className="container mx-auto p-4">
       <Tabs defaultValue="overview">
         <TabsList>
-          <TabsTrigger value="overview">Activity Overview</TabsTrigger>
+          <TabsTrigger value="overview">User Activities</TabsTrigger>
           <TabsTrigger value="notifications">Notifications</TabsTrigger>
           <TabsTrigger value="recommendations">Recommendations</TabsTrigger>
           <TabsTrigger value="progress">Progress Tracking</TabsTrigger>
