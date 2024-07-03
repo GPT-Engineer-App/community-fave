@@ -18,6 +18,9 @@ import ShareSphere from "./pages/ShareSphere.jsx"; // Import ShareSphere page
 import Onboarding from "./pages/Onboarding.jsx"; // Import Onboarding page
 import MentorshipPairings from "./pages/MentorshipPairings.jsx"; // Import MentorshipPairings page
 import ProgressDashboard from "./pages/ProgressDashboard.jsx"; // Import ProgressDashboard page
+import ResourceLibrary from "./pages/ResourceLibrary.jsx"; // Import ResourceLibrary page
+import InteractiveGuides from "./pages/InteractiveGuides.jsx"; // Import InteractiveGuides page
+import OrientationSessions from "./pages/OrientationSessions.jsx"; // Import OrientationSessions page
 
 const queryClient = new QueryClient();
 
@@ -86,6 +89,9 @@ const App = () => {
                 <Route path="onboarding" element={<Onboarding />} />
                 <Route path="mentorship-pairings" element={<MentorshipPairings />} />
                 <Route path="progress-dashboard" element={<ProgressDashboard />} />
+                <Route path="resource-library" element={<ResourceLibrary />} />
+                <Route path="interactive-guides" element={<InteractiveGuides />} />
+                <Route path="orientation-sessions" element={<OrientationSessions />} />
               </Route>
             </Routes>
           </Router>
