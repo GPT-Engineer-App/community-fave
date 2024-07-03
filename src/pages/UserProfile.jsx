@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -10,6 +10,7 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import { Textarea } from "@/components/ui/textarea";
 import { Badge } from "@/components/ui/badge";
 import { useUserProfile } from "@/integrations/supabase/index.js";
+import { useParams } from "react-router-dom"; // Import useParams
 
 const userProfileSchema = z.object({
   name: z.string().min(1, "Name is required"),
@@ -26,11 +27,12 @@ const userProfileSchema = z.object({
   ).optional(),
 });
 
-const UserProfile = ({ userId }) => {
+const UserProfile = () => {
+  const { userId } = useParams(); // Get userId from URL parameters
   const [certifications, setCertifications] = useState([]);
   const [trustScore, setTrustScore] = useState(0);
   const [badges, setBadges] = useState([]);
-  const { data: userProfile, isLoading, error } = useUserProfile(userId);
+  const { data: userProfile, isLoading, error } = useUserProfile(userId); // Pass userId to useUserProfile
 
   const form = useForm({
     resolver: zodResolver(userProfileSchema),
