@@ -54,6 +54,11 @@ const navItems = [
     to: "/fileflow",
     icon: <FileText className="h-4 w-4" />,
   },
+  {
+    title: "TradeCircle", // Add TradeCircle to navigation
+    to: "/tradecircle",
+    icon: <Box className="h-4 w-4" />,
+  },
 ];
 
 const Layout = () => {
