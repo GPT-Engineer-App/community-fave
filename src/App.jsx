@@ -13,6 +13,7 @@ import { SupabaseAuthProvider } from "./integrations/supabase/auth.jsx"; // Impo
 import KnowShare from "./pages/KnowShare.jsx"; // Import KnowShare page
 import TrustExpert from "./pages/TrustExpert.jsx"; // Import TrustExpert page
 import FileFlow from "./pages/FileFlow.jsx"; // Import FileFlow page
+import TradeCircle from "./pages/TradeCircle.jsx"; // Import TradeCircle page
 
 const queryClient = new QueryClient();
 
@@ -66,6 +67,7 @@ const App = () => {
                 <Route path="knowshare" element={<KnowShare />} />
                 <Route path="trustexpert" element={<TrustExpert />} />
                 <Route path="fileflow" element={<FileFlow />} />
+                <Route path="tradecircle" element={<TradeCircle />} />
               </Route>
             </Routes>
           </Router>
