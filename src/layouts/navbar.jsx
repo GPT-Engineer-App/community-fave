@@ -16,7 +16,7 @@ import { navItems } from "../App";
 const Layout = () => {
   return (
     <div className="flex min-h-screen w-full flex-col">
-      <header className="sticky top-0 flex h-16 items-center gap-4 border-b bg-background px-4 md:px-6 justify-between">
+      <header className="navbar sticky top-0 flex h-16 items-center gap-4 border-b px-4 md:px-6 justify-between">
         <DesktopNav />
         <MobileNav />
         <UserMenu />
