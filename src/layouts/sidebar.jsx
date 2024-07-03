@@ -9,7 +9,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { cn } from "@/lib/utils";
-import { CircleUser, Menu, BookOpen, Home, User, UserPlus, LogIn, Box, Shield, FileText } from "lucide-react";
+import { CircleUser, Menu, Home, User, UserPlus, LogIn, Box, Shield, FileText } from "lucide-react";
 import { NavLink, Outlet } from "react-router-dom";
 import { useSupabaseAuth } from "@/integrations/supabase/auth.jsx"; // Import useSupabaseAuth
 
@@ -42,7 +42,7 @@ const navItems = [
   {
     title: "KnowShare", // Add KnowShare to navigation
     to: "/knowshare",
-    icon: <BookOpen className="h-4 w-4" />,
+    icon: <FileText className="h-4 w-4" />,
   },
   {
     title: "TrustExpert", // Add TrustExpert to navigation
@@ -67,7 +67,7 @@ const navItems = [
   {
     title: "Onboarding", // Add Onboarding to navigation
     to: "/onboarding",
-    icon: <BookOpen className="h-4 w-4" />,
+    icon: <FileText className="h-4 w-4" />,
   },
   {
     title: "Mentorship Pairings", // Add Mentorship Pairings to navigation
@@ -108,7 +108,7 @@ const Layout = () => {
           <div className="w-full flex-1">{/* Add nav bar content here! */}</div>
           <UserDropdown session={session} logout={logout} />
         </header>
-        <main className="flex-grow p-4 overflow-auto">
+        <main className="flex-grow p-6 bg-primary-light-gray overflow-auto">
           <Outlet />
         </main>
       </div>
@@ -121,7 +121,7 @@ const Sidebar = ({ session }) => (
     <div className="flex h-full max-h-screen flex-col gap-2">
       <div className="flex h-14 items-center border-b px-4 lg:h-[60px] lg:px-6">
         <NavLink to="/" className="flex items-center gap-2 font-semibold">
-          <BookOpen className="h-6 w-6" />
+          <Home className="h-6 w-6" />
           <span>WelcomeHub</span>
         </NavLink>
       </div>
@@ -153,7 +153,7 @@ const MobileSidebar = ({ session }) => (
           to="/"
           className="flex items-center gap-2 text-lg font-semibold mb-4"
         >
-          <BookOpen className="h-6 w-6" />
+          <Home className="h-6 w-6" />
           <span>WelcomeHub</span>
         </NavLink>
         {navItems.map((item) => (
