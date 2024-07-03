@@ -10,6 +10,8 @@ import Register from "./pages/Register.jsx"; // Import Register page
 import Login from "./pages/Login.jsx"; // Import Login page
 import ContainerManagement from "./pages/ContainerManagement.jsx"; // Import ContainerManagement page
 import { SupabaseAuthProvider } from "./integrations/supabase/auth.jsx"; // Import SupabaseAuthProvider
+import KnowShare from "./pages/KnowShare.jsx"; // Import KnowShare page
+import TrustExpert from "./pages/TrustExpert.jsx"; // Import TrustExpert page
 
 const queryClient = new QueryClient();
 
@@ -55,6 +57,8 @@ const App = () => {
                 <Route path="register" element={<Register />} />
                 <Route path="login" element={<Login />} />
                 <Route path="containers" element={<ContainerManagement />} />
+                <Route path="knowshare" element={<KnowShare />} />
+                <Route path="trustexpert" element={<TrustExpert />} />
               </Route>
             </Routes>
           </Router>

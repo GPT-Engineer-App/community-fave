@@ -9,7 +9,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { cn } from "@/lib/utils";
-import { CircleUser, Menu, BookOpen, Home, User, UserPlus, LogIn, Box } from "lucide-react";
+import { CircleUser, Menu, BookOpen, Home, User, UserPlus, LogIn, Box, Shield } from "lucide-react";
 import { NavLink, Outlet } from "react-router-dom";
 import { useSupabaseAuth } from "@/integrations/supabase/auth.jsx"; // Import useSupabaseAuth
 
@@ -38,6 +38,16 @@ const navItems = [
     title: "Containers", // Add Container Management to navigation
     to: "/containers",
     icon: <Box className="h-4 w-4" />,
+  },
+  {
+    title: "KnowShare", // Add KnowShare to navigation
+    to: "/knowshare",
+    icon: <BookOpen className="h-4 w-4" />,
+  },
+  {
+    title: "TrustExpert", // Add TrustExpert to navigation
+    to: "/trustexpert",
+    icon: <Shield className="h-4 w-4" />,
   },
 ];
 
