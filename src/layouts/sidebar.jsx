@@ -9,9 +9,25 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { cn } from "@/lib/utils";
-import { CircleUser, Menu, BookOpen } from "lucide-react";
+import { CircleUser, Menu, BookOpen, Home, User, UserPlus } from "lucide-react";
 import { NavLink, Outlet } from "react-router-dom";
-import { navItems } from "../App";
+const navItems = [
+  {
+    title: "Home",
+    to: "/",
+    icon: <Home className="h-4 w-4" />,
+  },
+  {
+    title: "User Profile",
+    to: "/user-profile",
+    icon: <User className="h-4 w-4" />,
+  },
+  {
+    title: "Register", // Add Register to navigation
+    to: "/register",
+    icon: <UserPlus className="h-4 w-4" />,
+  },
+];
 
 const Layout = () => {
   return (
