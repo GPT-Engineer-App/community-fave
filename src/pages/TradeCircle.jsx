@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -7,8 +7,12 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
-import { useAddTransaction, useTransactions } from "@/integrations/supabase/index.js";
+import { useAddTransaction, useTransactions, useUpdateTransaction, useDeleteTransaction } from "@/integrations/supabase/index.js";
 import { toast } from "sonner";
+import { useSupabaseAuth } from "@/integrations/supabase/auth.jsx";
+import { useNavigate } from "react-router-dom";
+import { encryptData, decryptData } from "@/utils/encryption";
+import { useAuditLogs } from "@/integrations/supabase/auditLogs";
 
 const transactionSchema = z.object({
   itemName: z.string().min(1, "Item name is required"),
@@ -20,6 +24,12 @@ const transactionSchema = z.object({
 const TradeCircle = () => {
   const { data: transactions, isLoading, error } = useTransactions();
   const { mutate: addTransaction } = useAddTransaction();
+  const { mutate: updateTransaction } = useUpdateTransaction();
+  const { mutate: deleteTransaction } = useDeleteTransaction();
+  const { session } = useSupabaseAuth();
+  const navigate = useNavigate();
+  const { addAuditLog } = useAuditLogs();
+
   const form = useForm({
     resolver: zodResolver(transactionSchema),
     defaultValues: {
@@ -30,11 +40,47 @@ const TradeCircle = () => {
     },
   });
 
-  const onSubmit = (data) => {
-    addTransaction(data, {
+  useEffect(() => {
+    if (!session) {
+      navigate("/login");
+    }
+  }, [session, navigate]);
+
+  const onSubmit = async (data) => {
+    const encryptedData = encryptData(data);
+    addTransaction(encryptedData, {
       onSuccess: () => {
         toast("Transaction added successfully!");
         form.reset();
+        addAuditLog({
+          action: "add_transaction",
+          user: session.user.id,
+          details: encryptedData,
+        });
+      },
+      onError: (error) => {
+        toast.error(`Error: ${error.message}`);
+      },
+    });
+  };
+
+  const handleEdit = (transaction) => {
+    const decryptedData = decryptData(transaction);
+    form.setValue("itemName", decryptedData.itemName);
+    form.setValue("description", decryptedData.description);
+    form.setValue("value", decryptedData.value);
+    form.setValue("exchangeFor", decryptedData.exchangeFor);
+  };
+
+  const handleDelete = (id) => {
+    deleteTransaction(id, {
+      onSuccess: () => {
+        toast("Transaction deleted successfully!");
+        addAuditLog({
+          action: "delete_transaction",
+          user: session.user.id,
+          details: { transactionId: id },
+        });
       },
       onError: (error) => {
         toast.error(`Error: ${error.message}`);
@@ -114,16 +160,23 @@ const TradeCircle = () => {
       <div className="mt-4">
         <h2 className="text-xl font-semibold">Transactions</h2>
         <ul>
-          {transactions.map((transaction) => (
-            <li key={transaction.id} className="flex justify-between items-center p-2 border-b">
-              <div>
-                <h3 className="text-lg font-bold">{transaction.itemName}</h3>
-                <p>{transaction.description}</p>
-                <p>Value: {transaction.value}</p>
-                <p>Exchange For: {transaction.exchangeFor}</p>
-              </div>
-            </li>
-          ))}
+          {transactions.map((transaction) => {
+            const decryptedData = decryptData(transaction);
+            return (
+              <li key={transaction.id} className="flex justify-between items-center p-2 border-b">
+                <div>
+                  <h3 className="text-lg font-bold">{decryptedData.itemName}</h3>
+                  <p>{decryptedData.description}</p>
+                  <p>Value: {decryptedData.value}</p>
+                  <p>Exchange For: {decryptedData.exchangeFor}</p>
+                </div>
+                <div className="flex space-x-2">
+                  <Button variant="outline" onClick={() => handleEdit(transaction)}>Edit</Button>
+                  <Button variant="destructive" onClick={() => handleDelete(transaction.id)}>Delete</Button>
+                </div>
+              </li>
+            );
+          })}
         </ul>
       </div>
     </div>
