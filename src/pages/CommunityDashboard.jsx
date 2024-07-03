@@ -2,6 +2,7 @@ import React from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useQuery } from "@tanstack/react-query";
+import { Skeleton } from "@/components/ui/skeleton";
 import { supabase } from "@/integrations/supabase/index.js";
 import { toast } from "sonner";
 
@@ -30,22 +31,22 @@ const fetchKnowledgeSharing = async () => {
 };
 
 const CommunityDashboard = () => {
-  const { data: forumActivity, error: forumActivityError } = useQuery({
+  const { data: forumActivity, error: forumActivityError, isLoading: isLoadingForumActivity } = useQuery({
     queryKey: ["forumActivity"],
     queryFn: fetchForumActivity,
   });
 
-  const { data: eventCalendar, error: eventCalendarError } = useQuery({
+  const { data: eventCalendar, error: eventCalendarError, isLoading: isLoadingEventCalendar } = useQuery({
     queryKey: ["eventCalendar"],
     queryFn: fetchEventCalendar,
   });
 
-  const { data: userContributions, error: userContributionsError } = useQuery({
+  const { data: userContributions, error: userContributionsError, isLoading: isLoadingUserContributions } = useQuery({
     queryKey: ["userContributions"],
     queryFn: fetchUserContributions,
   });
 
-  const { data: knowledgeSharing, error: knowledgeSharingError } = useQuery({
+  const { data: knowledgeSharing, error: knowledgeSharingError, isLoading: isLoadingKnowledgeSharing } = useQuery({
     queryKey: ["knowledgeSharing"],
     queryFn: fetchKnowledgeSharing,
   });
@@ -69,14 +70,18 @@ const CommunityDashboard = () => {
               <CardTitle>Forum Activity</CardTitle>
             </CardHeader>
             <CardContent>
-              <ul>
-                {forumActivity?.map((activity) => (
-                  <li key={activity.id} className="mb-4">
-                    <h3 className="text-lg font-bold">{activity.title}</h3>
-                    <p>{activity.description}</p>
-                  </li>
-                ))}
-              </ul>
+              {isLoadingForumActivity ? (
+                <Skeleton className="h-6 w-full mb-4" count={5} />
+              ) : (
+                <ul>
+                  {forumActivity?.map((activity) => (
+                    <li key={activity.id} className="mb-4">
+                      <h3 className="text-lg font-bold">{activity.title}</h3>
+                      <p>{activity.description}</p>
+                    </li>
+                  ))}
+                </ul>
+              )}
             </CardContent>
           </Card>
         </TabsContent>
@@ -86,15 +91,19 @@ const CommunityDashboard = () => {
               <CardTitle>Event Calendar</CardTitle>
             </CardHeader>
             <CardContent>
-              <ul>
-                {eventCalendar?.map((event) => (
-                  <li key={event.id} className="mb-4">
-                    <h3 className="text-lg font-bold">{event.title}</h3>
-                    <p>{event.description}</p>
-                    <p>Date: {event.date}</p>
-                  </li>
-                ))}
-              </ul>
+              {isLoadingEventCalendar ? (
+                <Skeleton className="h-6 w-full mb-4" count={5} />
+              ) : (
+                <ul>
+                  {eventCalendar?.map((event) => (
+                    <li key={event.id} className="mb-4">
+                      <h3 className="text-lg font-bold">{event.title}</h3>
+                      <p>{event.description}</p>
+                      <p>Date: {event.date}</p>
+                    </li>
+                  ))}
+                </ul>
+              )}
             </CardContent>
           </Card>
         </TabsContent>
@@ -104,14 +113,18 @@ const CommunityDashboard = () => {
               <CardTitle>User Contributions</CardTitle>
             </CardHeader>
             <CardContent>
-              <ul>
-                {userContributions?.map((contribution) => (
-                  <li key={contribution.id} className="mb-4">
-                    <h3 className="text-lg font-bold">{contribution.user}</h3>
-                    <p>{contribution.contribution}</p>
-                  </li>
-                ))}
-              </ul>
+              {isLoadingUserContributions ? (
+                <Skeleton className="h-6 w-full mb-4" count={5} />
+              ) : (
+                <ul>
+                  {userContributions?.map((contribution) => (
+                    <li key={contribution.id} className="mb-4">
+                      <h3 className="text-lg font-bold">{contribution.user}</h3>
+                      <p>{contribution.contribution}</p>
+                    </li>
+                  ))}
+                </ul>
+              )}
             </CardContent>
           </Card>
         </TabsContent>
@@ -121,14 +134,18 @@ const CommunityDashboard = () => {
               <CardTitle>Knowledge Sharing</CardTitle>
             </CardHeader>
             <CardContent>
-              <ul>
-                {knowledgeSharing?.map((item) => (
-                  <li key={item.id} className="mb-4">
-                    <h3 className="text-lg font-bold">{item.title}</h3>
-                    <p>{item.description}</p>
-                  </li>
-                ))}
-              </ul>
+              {isLoadingKnowledgeSharing ? (
+                <Skeleton className="h-6 w-full mb-4" count={5} />
+              ) : (
+                <ul>
+                  {knowledgeSharing?.map((item) => (
+                    <li key={item.id} className="mb-4">
+                      <h3 className="text-lg font-bold">{item.title}</h3>
+                      <p>{item.description}</p>
+                    </li>
+                  ))}
+                </ul>
+              )}
             </CardContent>
           </Card>
         </TabsContent>

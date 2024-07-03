@@ -2,6 +2,7 @@ import React from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Progress } from "@/components/ui/progress";
+import { Skeleton } from "@/components/ui/skeleton";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/index.js";
 import { toast } from "sonner";
@@ -31,22 +32,22 @@ const fetchProgress = async () => {
 };
 
 const UserDashboard = () => {
-  const { data: activities, error: activitiesError } = useQuery({
+  const { data: activities, error: activitiesError, isLoading: isLoadingActivities } = useQuery({
     queryKey: ["activities"],
     queryFn: fetchUserActivities,
   });
 
-  const { data: notifications, error: notificationsError } = useQuery({
+  const { data: notifications, error: notificationsError, isLoading: isLoadingNotifications } = useQuery({
     queryKey: ["notifications"],
     queryFn: fetchNotifications,
   });
 
-  const { data: recommendations, error: recommendationsError } = useQuery({
+  const { data: recommendations, error: recommendationsError, isLoading: isLoadingRecommendations } = useQuery({
     queryKey: ["recommendations"],
     queryFn: fetchRecommendations,
   });
 
-  const { data: progress, error: progressError } = useQuery({
+  const { data: progress, error: progressError, isLoading: isLoadingProgress } = useQuery({
     queryKey: ["progress"],
     queryFn: fetchProgress,
   });
@@ -70,14 +71,18 @@ const UserDashboard = () => {
               <CardTitle>Activity Overview</CardTitle>
             </CardHeader>
             <CardContent>
-              <ul>
-                {activities?.map((activity) => (
-                  <li key={activity.id} className="mb-4">
-                    <h3 className="text-lg font-bold">{activity.title}</h3>
-                    <p>{activity.description}</p>
-                  </li>
-                ))}
-              </ul>
+              {isLoadingActivities ? (
+                <Skeleton className="h-6 w-full mb-4" count={5} />
+              ) : (
+                <ul>
+                  {activities?.map((activity) => (
+                    <li key={activity.id} className="mb-4">
+                      <h3 className="text-lg font-bold">{activity.title}</h3>
+                      <p>{activity.description}</p>
+                    </li>
+                  ))}
+                </ul>
+              )}
             </CardContent>
           </Card>
         </TabsContent>
@@ -87,14 +92,18 @@ const UserDashboard = () => {
               <CardTitle>Notifications</CardTitle>
             </CardHeader>
             <CardContent>
-              <ul>
-                {notifications?.map((notification) => (
-                  <li key={notification.id} className="mb-4">
-                    <h3 className="text-lg font-bold">{notification.title}</h3>
-                    <p>{notification.description}</p>
-                  </li>
-                ))}
-              </ul>
+              {isLoadingNotifications ? (
+                <Skeleton className="h-6 w-full mb-4" count={5} />
+              ) : (
+                <ul>
+                  {notifications?.map((notification) => (
+                    <li key={notification.id} className="mb-4">
+                      <h3 className="text-lg font-bold">{notification.title}</h3>
+                      <p>{notification.description}</p>
+                    </li>
+                  ))}
+                </ul>
+              )}
             </CardContent>
           </Card>
         </TabsContent>
@@ -104,14 +113,18 @@ const UserDashboard = () => {
               <CardTitle>Recommendations</CardTitle>
             </CardHeader>
             <CardContent>
-              <ul>
-                {recommendations?.map((recommendation) => (
-                  <li key={recommendation.id} className="mb-4">
-                    <h3 className="text-lg font-bold">{recommendation.title}</h3>
-                    <p>{recommendation.description}</p>
-                  </li>
-                ))}
-              </ul>
+              {isLoadingRecommendations ? (
+                <Skeleton className="h-6 w-full mb-4" count={5} />
+              ) : (
+                <ul>
+                  {recommendations?.map((recommendation) => (
+                    <li key={recommendation.id} className="mb-4">
+                      <h3 className="text-lg font-bold">{recommendation.title}</h3>
+                      <p>{recommendation.description}</p>
+                    </li>
+                  ))}
+                </ul>
+              )}
             </CardContent>
           </Card>
         </TabsContent>
@@ -121,14 +134,18 @@ const UserDashboard = () => {
               <CardTitle>Progress Tracking</CardTitle>
             </CardHeader>
             <CardContent>
-              <ul>
-                {progress?.map((item) => (
-                  <li key={item.id} className="mb-4">
-                    <h3 className="text-lg font-bold">{item.title}</h3>
-                    <Progress value={item.progress} />
-                  </li>
-                ))}
-              </ul>
+              {isLoadingProgress ? (
+                <Skeleton className="h-6 w-full mb-4" count={5} />
+              ) : (
+                <ul>
+                  {progress?.map((item) => (
+                    <li key={item.id} className="mb-4">
+                      <h3 className="text-lg font-bold">{item.title}</h3>
+                      <Progress value={item.progress} />
+                    </li>
+                  ))}
+                </ul>
+              )}
             </CardContent>
           </Card>
         </TabsContent>
