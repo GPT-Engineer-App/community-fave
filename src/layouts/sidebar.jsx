@@ -9,7 +9,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { cn } from "@/lib/utils";
-import { CircleUser, Menu, BookOpen, Home, User, UserPlus, LogIn, Box, Shield } from "lucide-react";
+import { CircleUser, Menu, BookOpen, Home, User, UserPlus, LogIn, Box, Shield, FileText } from "lucide-react";
 import { NavLink, Outlet } from "react-router-dom";
 import { useSupabaseAuth } from "@/integrations/supabase/auth.jsx"; // Import useSupabaseAuth
 
@@ -49,6 +49,11 @@ const navItems = [
     to: "/trustexpert",
     icon: <Shield className="h-4 w-4" />,
   },
+  {
+    title: "FileFlow", // Add FileFlow to navigation
+    to: "/fileflow",
+    icon: <FileText className="h-4 w-4" />,
+  },
 ];
 
 const Layout = () => {
@@ -77,7 +82,7 @@ const Sidebar = ({ session }) => (
       <div className="flex h-14 items-center border-b px-4 lg:h-[60px] lg:px-6">
         <NavLink to="/" className="flex items-center gap-2 font-semibold">
           <BookOpen className="h-6 w-6" />
-          <span>KnowShare</span>
+          <span>The Faving Ecosystem</span>
         </NavLink>
       </div>
       <div className="flex-1">
@@ -109,7 +114,7 @@ const MobileSidebar = ({ session }) => (
           className="flex items-center gap-2 text-lg font-semibold mb-4"
         >
           <BookOpen className="h-6 w-6" />
-          <span>KnowShare</span>
+          <span>The Faving Ecosystem</span>
         </NavLink>
         {navItems.map((item) => (
           <SidebarNavLink key={item.to} to={item.to}>

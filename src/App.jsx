@@ -12,6 +12,7 @@ import ContainerManagement from "./pages/ContainerManagement.jsx"; // Import Con
 import { SupabaseAuthProvider } from "./integrations/supabase/auth.jsx"; // Import SupabaseAuthProvider
 import KnowShare from "./pages/KnowShare.jsx"; // Import KnowShare page
 import TrustExpert from "./pages/TrustExpert.jsx"; // Import TrustExpert page
+import FileFlow from "./pages/FileFlow.jsx"; // Import FileFlow page
 
 const queryClient = new QueryClient();
 
@@ -41,6 +42,11 @@ export const navItems = [
     to: "/containers",
     icon: <Box className="h-4 w-4" />,
   },
+  {
+    title: "FileFlow", // Add FileFlow to navigation
+    to: "/fileflow",
+    icon: <Box className="h-4 w-4" />,
+  },
 ];
 
 const App = () => {
@@ -59,6 +65,7 @@ const App = () => {
                 <Route path="containers" element={<ContainerManagement />} />
                 <Route path="knowshare" element={<KnowShare />} />
                 <Route path="trustexpert" element={<TrustExpert />} />
+                <Route path="fileflow" element={<FileFlow />} />
               </Route>
             </Routes>
           </Router>
