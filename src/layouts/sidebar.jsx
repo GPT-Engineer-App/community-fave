@@ -103,7 +103,7 @@ const Layout = () => {
     <div className="grid min-h-screen w-full md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr]">
       <Sidebar session={session} />
       <div className="flex flex-col">
-        <header className="flex h-14 items-center gap-4 border-b bg-muted/40 px-4 lg:h-[60px] lg:px-6">
+        <header className="flex h-14 items-center gap-4 border-b bg-secondary-dark-gray text-primary-white px-4 lg:h-[60px] lg:px-6">
           <MobileSidebar session={session} />
           <div className="w-full flex-1">{/* Add nav bar content here! */}</div>
           <UserDropdown session={session} logout={logout} />
@@ -117,7 +117,7 @@ const Layout = () => {
 };
 
 const Sidebar = ({ session }) => (
-  <div className="hidden border-r bg-muted/40 md:block">
+  <div className="hidden border-r bg-secondary-dark-gray text-primary-white md:block">
     <div className="flex h-full max-h-screen flex-col gap-2">
       <div className="flex h-14 items-center border-b px-4 lg:h-[60px] lg:px-6">
         <NavLink to="/" className="flex items-center gap-2 font-semibold">
@@ -147,7 +147,7 @@ const MobileSidebar = ({ session }) => (
         <span className="sr-only">Toggle navigation menu</span>
       </Button>
     </SheetTrigger>
-    <SheetContent side="left" className="flex flex-col">
+    <SheetContent side="left" className="flex flex-col bg-secondary-dark-gray text-primary-white">
       <nav className="grid gap-2 text-lg font-medium">
         <NavLink
           to="/"
@@ -194,8 +194,8 @@ const SidebarNavLink = ({ to, children }) => (
     to={to}
     className={({ isActive }) =>
       cn(
-        "flex items-center gap-3 rounded-lg px-3 py-2 transition-all hover:text-primary text-muted-foreground",
-        isActive && "text-primary bg-muted",
+        "flex items-center gap-3 rounded-lg px-3 py-2 transition-all hover:bg-secondary-light-gray hover:text-primary-blue text-primary-white",
+        isActive && "bg-secondary-light-gray text-primary-blue",
       )
     }
   >
