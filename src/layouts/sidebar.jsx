@@ -69,6 +69,11 @@ const navItems = [
     to: "/onboarding",
     icon: <BookOpen className="h-4 w-4" />,
   },
+  {
+    title: "Mentorship Pairings", // Add Mentorship Pairings to navigation
+    to: "/mentorship-pairings",
+    icon: <User className="h-4 w-4" />,
+  },
 ];
 
 const Layout = () => {

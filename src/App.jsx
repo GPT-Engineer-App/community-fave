@@ -16,6 +16,7 @@ import FileFlow from "./pages/FileFlow.jsx"; // Import FileFlow page
 import TradeCircle from "./pages/TradeCircle.jsx"; // Import TradeCircle page
 import ShareSphere from "./pages/ShareSphere.jsx"; // Import ShareSphere page
 import Onboarding from "./pages/Onboarding.jsx"; // Import Onboarding page
+import MentorshipPairings from "./pages/MentorshipPairings.jsx"; // Import MentorshipPairings page
 
 const queryClient = new QueryClient();
 
@@ -82,6 +83,7 @@ const App = () => {
                 <Route path="tradecircle" element={<TradeCircle />} />
                 <Route path="sharesphere" element={<ShareSphere />} />
                 <Route path="onboarding" element={<Onboarding />} />
+                <Route path="mentorship-pairings" element={<MentorshipPairings />} />
               </Route>
             </Routes>
           </Router>

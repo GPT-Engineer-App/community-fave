@@ -446,3 +446,44 @@ export const useDeleteContainer = () => {
         },
     });
 };
+
+// Hooks for mentorships
+export const useMentorships = () => useQuery({
+    queryKey: ['mentorships'],
+    queryFn: () => fromSupabase(supabase.from('mentorships').select('*')),
+});
+
+export const useMentorship = (id) => useQuery({
+    queryKey: ['mentorship', id],
+    queryFn: () => fromSupabase(supabase.from('mentorships').select('*').eq('id', id).single()),
+});
+
+export const useAddMentorship = () => {
+    const queryClient = useQueryClient();
+    return useMutation({
+        mutationFn: (newMentorship) => fromSupabase(supabase.from('mentorships').insert([newMentorship])),
+        onSuccess: () => {
+            queryClient.invalidateQueries('mentorships');
+        },
+    });
+};
+
+export const useUpdateMentorship = () => {
+    const queryClient = useQueryClient();
+    return useMutation({
+        mutationFn: (updatedMentorship) => fromSupabase(supabase.from('mentorships').update(updatedMentorship).eq('id', updatedMentorship.id)),
+        onSuccess: () => {
+            queryClient.invalidateQueries('mentorships');
+        },
+    });
+};
+
+export const useDeleteMentorship = () => {
+    const queryClient = useQueryClient();
+    return useMutation({
+        mutationFn: (id) => fromSupabase(supabase.from('mentorships').delete().eq('id', id)),
+        onSuccess: () => {
+            queryClient.invalidateQueries('mentorships');
+        },
+    });
+};
