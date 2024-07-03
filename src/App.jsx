@@ -21,6 +21,7 @@ import ProgressDashboard from "./pages/ProgressDashboard.jsx"; // Import Progres
 import ResourceLibrary from "./pages/ResourceLibrary.jsx"; // Import ResourceLibrary page
 import InteractiveGuides from "./pages/InteractiveGuides.jsx"; // Import InteractiveGuides page
 import OrientationSessions from "./pages/OrientationSessions.jsx"; // Import OrientationSessions page
+import UserDashboard from "./pages/UserDashboard.jsx"; // Import UserDashboard page
 
 const queryClient = new QueryClient();
 
@@ -92,6 +93,7 @@ const App = () => {
                 <Route path="resource-library" element={<ResourceLibrary />} />
                 <Route path="interactive-guides" element={<InteractiveGuides />} />
                 <Route path="orientation-sessions" element={<OrientationSessions />} />
+                <Route path="user-dashboard" element={<UserDashboard />} />
               </Route>
             </Routes>
           </Router>
