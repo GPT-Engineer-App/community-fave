@@ -89,6 +89,11 @@ const navItems = [
     to: "/project-dashboard",
     icon: <Home className="h-4 w-4" />,
   },
+  {
+    title: "Community Dashboard", // Add Community Dashboard to navigation
+    to: "/community-dashboard",
+    icon: <Home className="h-4 w-4" />,
+  },
 ];
 
 const Layout = () => {
