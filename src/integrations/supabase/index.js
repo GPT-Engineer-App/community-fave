@@ -19,6 +19,77 @@ const fromSupabase = async (query) => {
 
 /* supabase integration types
 
+### certifications
+
+| name       | type        | format | required |
+|------------|-------------|--------|----------|
+| id         | int8        | number | true     |
+| user_id    | int8        | number | true     |
+| name       | text        | string | true     |
+| organization | text      | string | true     |
+| date       | timestamptz | string | true     |
+| created_at | timestamptz | string | true     |
+
+### transactions
+
+| name       | type        | format | required |
+|------------|-------------|--------|----------|
+| id         | int8        | number | true     |
+| project_id | int8        | number | true     |
+| user_id    | int8        | number | true     |
+| type       | text        | string | true     |
+| amount     | numeric     | number | true     |
+| date       | timestamptz | string | true     |
+| created_at | timestamptz | string | true     |
+
+### projects
+
+| name       | type        | format | required |
+|------------|-------------|--------|----------|
+| id         | int8        | number | true     |
+| title      | text        | string | true     |
+| description | text       | string | true     |
+| project_manager | int8   | number | true     |
+| team_members | int8[]    | array  | true     |
+| start_date | timestamptz | string | true     |
+| end_date   | timestamptz | string | true     |
+| current_status | text    | string | true     |
+| objectives | text        | string | true     |
+| milestones | text        | string | true     |
+| budget     | numeric     | number | true     |
+| created_at | timestamptz | string | true     |
+
+### multimedia_files
+
+| name       | type        | format | required |
+|------------|-------------|--------|----------|
+| id         | int8        | number | true     |
+| project_id | int8        | number | true     |
+| file_url   | text        | string | true     |
+| file_type  | text        | string | true     |
+| created_at | timestamptz | string | true     |
+
+### endorsements
+
+| name       | type        | format | required |
+|------------|-------------|--------|----------|
+| id         | int8        | number | true     |
+| user_id    | int8        | number | true     |
+| endorsed_by | int8       | number | true     |
+| endorsement_text | text  | string | true     |
+| date       | timestamptz | string | true     |
+| created_at | timestamptz | string | true     |
+
+### documents
+
+| name       | type        | format | required |
+|------------|-------------|--------|----------|
+| id         | int8        | number | true     |
+| project_id | int8        | number | true     |
+| title      | text        | string | true     |
+| content    | text        | string | true     |
+| created_at | timestamptz | string | true     |
+
 ### user_profile
 
 | name       | type        | format | required |
@@ -28,224 +99,51 @@ const fromSupabase = async (query) => {
 | email      | text        | string | true     |
 | phone      | text        | string | true     |
 | created_at | timestamptz | string | true     |
-| projects_managed | int8[] | array | false    |
-| projects_contributed | int8[] | array | false |
-| transactions_initiated | int8[] | array | false |
-| endorsements_received | int8[] | array | false |
-
-### project
-
-| name       | type        | format | required |
-|------------|-------------|--------|----------|
-| id         | int8        | number | true     |
-| name       | text        | string | true     |
-| description | text       | string | true     |
-| created_at | timestamptz | string | true     |
-| associated_documents | int8[] | array | false |
-| linked_multimedia_files | int8[] | array | false |
-| related_transactions | int8[] | array | false |
-| involved_users | int8[] | array | false |
-
-### document
-
-| name       | type        | format | required |
-|------------|-------------|--------|----------|
-| id         | int8        | number | true     |
-| name       | text        | string | true     |
-| content    | text        | string | true     |
-| created_at | timestamptz | string | true     |
-| linked_projects | int8[] | array | false |
-| related_multimedia_files | int8[] | array | false |
-| referenced_transactions | int8[] | array | false |
-
-### multimedia_file
-
-| name       | type        | format | required |
-|------------|-------------|--------|----------|
-| id         | int8        | number | true     |
-| name       | text        | string | true     |
-| url        | text        | string | true     |
-| created_at | timestamptz | string | true     |
-| linked_projects | int8[] | array | false |
-| associated_documents | int8[] | array | false |
-| referenced_transactions | int8[] | array | false |
-
-### transaction
-
-| name       | type        | format | required |
-|------------|-------------|--------|----------|
-| id         | int8        | number | true     |
-| name       | text        | string | true     |
-| amount     | numeric     | number | true     |
-| created_at | timestamptz | string | true     |
-| linked_projects | int8[] | array | false |
-| involved_users | int8[] | array | false |
-| associated_documents | int8[] | array | false |
-| associated_multimedia | int8[] | array | false |
 
 */
 
-// Hooks for user_profile table
-export const useUserProfiles = () => useQuery({
-    queryKey: ['user_profiles'],
-    queryFn: () => fromSupabase(supabase.from('user_profile').select('*')),
+// Example hook for models
+
+export const useCertifications = () => useQuery({
+    queryKey: ['certifications'],
+    queryFn: () => fromSupabase(supabase.from('certifications').select('*')),
 });
-export const useUserProfile = (id) => useQuery({
-    queryKey: ['user_profile', id],
-    queryFn: () => fromSupabase(supabase.from('user_profile').select('*').eq('id', id).single()),
-});
-export const useAddUserProfile = () => {
+export const useAddCertification = () => {
     const queryClient = useQueryClient();
     return useMutation({
-        mutationFn: (newUserProfile) => fromSupabase(supabase.from('user_profile').insert([newUserProfile])),
+        mutationFn: (newCertification) => fromSupabase(supabase.from('certifications').insert([newCertification])),
         onSuccess: () => {
-            queryClient.invalidateQueries('user_profiles');
+            queryClient.invalidateQueries('certifications');
         },
     });
 };
-export const useUpdateUserProfile = () => {
+export const useUpdateCertification = () => {
     const queryClient = useQueryClient();
     return useMutation({
-        mutationFn: (updatedUserProfile) => fromSupabase(supabase.from('user_profile').update(updatedUserProfile).eq('id', updatedUserProfile.id)),
+        mutationFn: (updatedCertification) => fromSupabase(supabase.from('certifications').update(updatedCertification).eq('id', updatedCertification.id)),
         onSuccess: () => {
-            queryClient.invalidateQueries('user_profiles');
+            queryClient.invalidateQueries('certifications');
         },
     });
 };
-export const useDeleteUserProfile = () => {
+export const useDeleteCertification = () => {
     const queryClient = useQueryClient();
     return useMutation({
-        mutationFn: (id) => fromSupabase(supabase.from('user_profile').delete().eq('id', id)),
+        mutationFn: (id) => fromSupabase(supabase.from('certifications').delete().eq('id', id)),
         onSuccess: () => {
-            queryClient.invalidateQueries('user_profiles');
+            queryClient.invalidateQueries('certifications');
         },
     });
 };
 
-// Hooks for project table
-export const useProjects = () => useQuery({
-    queryKey: ['projects'],
-    queryFn: () => fromSupabase(supabase.from('project').select('*')),
-});
-export const useProject = (id) => useQuery({
-    queryKey: ['project', id],
-    queryFn: () => fromSupabase(supabase.from('project').select('*').eq('id', id).single()),
-});
-export const useAddProject = () => {
-    const queryClient = useQueryClient();
-    return useMutation({
-        mutationFn: (newProject) => fromSupabase(supabase.from('project').insert([newProject])),
-        onSuccess: () => {
-            queryClient.invalidateQueries('projects');
-        },
-    });
-};
-export const useUpdateProject = () => {
-    const queryClient = useQueryClient();
-    return useMutation({
-        mutationFn: (updatedProject) => fromSupabase(supabase.from('project').update(updatedProject).eq('id', updatedProject.id)),
-        onSuccess: () => {
-            queryClient.invalidateQueries('projects');
-        },
-    });
-};
-export const useDeleteProject = () => {
-    const queryClient = useQueryClient();
-    return useMutation({
-        mutationFn: (id) => fromSupabase(supabase.from('project').delete().eq('id', id)),
-        onSuccess: () => {
-            queryClient.invalidateQueries('projects');
-        },
-    });
-};
-
-// Hooks for document table
-export const useDocuments = () => useQuery({
-    queryKey: ['documents'],
-    queryFn: () => fromSupabase(supabase.from('document').select('*')),
-});
-export const useDocument = (id) => useQuery({
-    queryKey: ['document', id],
-    queryFn: () => fromSupabase(supabase.from('document').select('*').eq('id', id).single()),
-});
-export const useAddDocument = () => {
-    const queryClient = useQueryClient();
-    return useMutation({
-        mutationFn: (newDocument) => fromSupabase(supabase.from('document').insert([newDocument])),
-        onSuccess: () => {
-            queryClient.invalidateQueries('documents');
-        },
-    });
-};
-export const useUpdateDocument = () => {
-    const queryClient = useQueryClient();
-    return useMutation({
-        mutationFn: (updatedDocument) => fromSupabase(supabase.from('document').update(updatedDocument).eq('id', updatedDocument.id)),
-        onSuccess: () => {
-            queryClient.invalidateQueries('documents');
-        },
-    });
-};
-export const useDeleteDocument = () => {
-    const queryClient = useQueryClient();
-    return useMutation({
-        mutationFn: (id) => fromSupabase(supabase.from('document').delete().eq('id', id)),
-        onSuccess: () => {
-            queryClient.invalidateQueries('documents');
-        },
-    });
-};
-
-// Hooks for multimedia_file table
-export const useMultimediaFiles = () => useQuery({
-    queryKey: ['multimedia_files'],
-    queryFn: () => fromSupabase(supabase.from('multimedia_file').select('*')),
-});
-export const useMultimediaFile = (id) => useQuery({
-    queryKey: ['multimedia_file', id],
-    queryFn: () => fromSupabase(supabase.from('multimedia_file').select('*').eq('id', id).single()),
-});
-export const useAddMultimediaFile = () => {
-    const queryClient = useQueryClient();
-    return useMutation({
-        mutationFn: (newMultimediaFile) => fromSupabase(supabase.from('multimedia_file').insert([newMultimediaFile])),
-        onSuccess: () => {
-            queryClient.invalidateQueries('multimedia_files');
-        },
-    });
-};
-export const useUpdateMultimediaFile = () => {
-    const queryClient = useQueryClient();
-    return useMutation({
-        mutationFn: (updatedMultimediaFile) => fromSupabase(supabase.from('multimedia_file').update(updatedMultimediaFile).eq('id', updatedMultimediaFile.id)),
-        onSuccess: () => {
-            queryClient.invalidateQueries('multimedia_files');
-        },
-    });
-};
-export const useDeleteMultimediaFile = () => {
-    const queryClient = useQueryClient();
-    return useMutation({
-        mutationFn: (id) => fromSupabase(supabase.from('multimedia_file').delete().eq('id', id)),
-        onSuccess: () => {
-            queryClient.invalidateQueries('multimedia_files');
-        },
-    });
-};
-
-// Hooks for transaction table
 export const useTransactions = () => useQuery({
     queryKey: ['transactions'],
-    queryFn: () => fromSupabase(supabase.from('transaction').select('*')),
-});
-export const useTransaction = (id) => useQuery({
-    queryKey: ['transaction', id],
-    queryFn: () => fromSupabase(supabase.from('transaction').select('*').eq('id', id).single()),
+    queryFn: () => fromSupabase(supabase.from('transactions').select('*')),
 });
 export const useAddTransaction = () => {
     const queryClient = useQueryClient();
     return useMutation({
-        mutationFn: (newTransaction) => fromSupabase(supabase.from('transaction').insert([newTransaction])),
+        mutationFn: (newTransaction) => fromSupabase(supabase.from('transactions').insert([newTransaction])),
         onSuccess: () => {
             queryClient.invalidateQueries('transactions');
         },
@@ -254,7 +152,7 @@ export const useAddTransaction = () => {
 export const useUpdateTransaction = () => {
     const queryClient = useQueryClient();
     return useMutation({
-        mutationFn: (updatedTransaction) => fromSupabase(supabase.from('transaction').update(updatedTransaction).eq('id', updatedTransaction.id)),
+        mutationFn: (updatedTransaction) => fromSupabase(supabase.from('transactions').update(updatedTransaction).eq('id', updatedTransaction.id)),
         onSuccess: () => {
             queryClient.invalidateQueries('transactions');
         },
@@ -263,9 +161,169 @@ export const useUpdateTransaction = () => {
 export const useDeleteTransaction = () => {
     const queryClient = useQueryClient();
     return useMutation({
-        mutationFn: (id) => fromSupabase(supabase.from('transaction').delete().eq('id', id)),
+        mutationFn: (id) => fromSupabase(supabase.from('transactions').delete().eq('id', id)),
         onSuccess: () => {
             queryClient.invalidateQueries('transactions');
+        },
+    });
+};
+
+export const useProjects = () => useQuery({
+    queryKey: ['projects'],
+    queryFn: () => fromSupabase(supabase.from('projects').select('*')),
+});
+export const useAddProject = () => {
+    const queryClient = useQueryClient();
+    return useMutation({
+        mutationFn: (newProject) => fromSupabase(supabase.from('projects').insert([newProject])),
+        onSuccess: () => {
+            queryClient.invalidateQueries('projects');
+        },
+    });
+};
+export const useUpdateProject = () => {
+    const queryClient = useQueryClient();
+    return useMutation({
+        mutationFn: (updatedProject) => fromSupabase(supabase.from('projects').update(updatedProject).eq('id', updatedProject.id)),
+        onSuccess: () => {
+            queryClient.invalidateQueries('projects');
+        },
+    });
+};
+export const useDeleteProject = () => {
+    const queryClient = useQueryClient();
+    return useMutation({
+        mutationFn: (id) => fromSupabase(supabase.from('projects').delete().eq('id', id)),
+        onSuccess: () => {
+            queryClient.invalidateQueries('projects');
+        },
+    });
+};
+
+export const useMultimediaFiles = () => useQuery({
+    queryKey: ['multimedia_files'],
+    queryFn: () => fromSupabase(supabase.from('multimedia_files').select('*')),
+});
+export const useAddMultimediaFile = () => {
+    const queryClient = useQueryClient();
+    return useMutation({
+        mutationFn: (newMultimediaFile) => fromSupabase(supabase.from('multimedia_files').insert([newMultimediaFile])),
+        onSuccess: () => {
+            queryClient.invalidateQueries('multimedia_files');
+        },
+    });
+};
+export const useUpdateMultimediaFile = () => {
+    const queryClient = useQueryClient();
+    return useMutation({
+        mutationFn: (updatedMultimediaFile) => fromSupabase(supabase.from('multimedia_files').update(updatedMultimediaFile).eq('id', updatedMultimediaFile.id)),
+        onSuccess: () => {
+            queryClient.invalidateQueries('multimedia_files');
+        },
+    });
+};
+export const useDeleteMultimediaFile = () => {
+    const queryClient = useQueryClient();
+    return useMutation({
+        mutationFn: (id) => fromSupabase(supabase.from('multimedia_files').delete().eq('id', id)),
+        onSuccess: () => {
+            queryClient.invalidateQueries('multimedia_files');
+        },
+    });
+};
+
+export const useEndorsements = () => useQuery({
+    queryKey: ['endorsements'],
+    queryFn: () => fromSupabase(supabase.from('endorsements').select('*')),
+});
+export const useAddEndorsement = () => {
+    const queryClient = useQueryClient();
+    return useMutation({
+        mutationFn: (newEndorsement) => fromSupabase(supabase.from('endorsements').insert([newEndorsement])),
+        onSuccess: () => {
+            queryClient.invalidateQueries('endorsements');
+        },
+    });
+};
+export const useUpdateEndorsement = () => {
+    const queryClient = useQueryClient();
+    return useMutation({
+        mutationFn: (updatedEndorsement) => fromSupabase(supabase.from('endorsements').update(updatedEndorsement).eq('id', updatedEndorsement.id)),
+        onSuccess: () => {
+            queryClient.invalidateQueries('endorsements');
+        },
+    });
+};
+export const useDeleteEndorsement = () => {
+    const queryClient = useQueryClient();
+    return useMutation({
+        mutationFn: (id) => fromSupabase(supabase.from('endorsements').delete().eq('id', id)),
+        onSuccess: () => {
+            queryClient.invalidateQueries('endorsements');
+        },
+    });
+};
+
+export const useDocuments = () => useQuery({
+    queryKey: ['documents'],
+    queryFn: () => fromSupabase(supabase.from('documents').select('*')),
+});
+export const useAddDocument = () => {
+    const queryClient = useQueryClient();
+    return useMutation({
+        mutationFn: (newDocument) => fromSupabase(supabase.from('documents').insert([newDocument])),
+        onSuccess: () => {
+            queryClient.invalidateQueries('documents');
+        },
+    });
+};
+export const useUpdateDocument = () => {
+    const queryClient = useQueryClient();
+    return useMutation({
+        mutationFn: (updatedDocument) => fromSupabase(supabase.from('documents').update(updatedDocument).eq('id', updatedDocument.id)),
+        onSuccess: () => {
+            queryClient.invalidateQueries('documents');
+        },
+    });
+};
+export const useDeleteDocument = () => {
+    const queryClient = useQueryClient();
+    return useMutation({
+        mutationFn: (id) => fromSupabase(supabase.from('documents').delete().eq('id', id)),
+        onSuccess: () => {
+            queryClient.invalidateQueries('documents');
+        },
+    });
+};
+
+export const useUserProfile = (userId) => useQuery({
+    queryKey: ['user_profile', userId],
+    queryFn: () => fromSupabase(supabase.from('user_profile').select('*').eq('id', userId)),
+});
+export const useAddUserProfile = () => {
+    const queryClient = useQueryClient();
+    return useMutation({
+        mutationFn: (newUserProfile) => fromSupabase(supabase.from('user_profile').insert([newUserProfile])),
+        onSuccess: () => {
+            queryClient.invalidateQueries('user_profile');
+        },
+    });
+};
+export const useUpdateUserProfile = () => {
+    const queryClient = useQueryClient();
+    return useMutation({
+        mutationFn: (updatedUserProfile) => fromSupabase(supabase.from('user_profile').update(updatedUserProfile).eq('id', updatedUserProfile.id)),
+        onSuccess: () => {
+            queryClient.invalidateQueries('user_profile');
+        },
+    });
+};
+export const useDeleteUserProfile = () => {
+    const queryClient = useQueryClient();
+    return useMutation({
+        mutationFn: (id) => fromSupabase(supabase.from('user_profile').delete().eq('id', id)),
+        onSuccess: () => {
+            queryClient.invalidateQueries('user_profile');
         },
     });
 };
