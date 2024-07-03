@@ -22,6 +22,7 @@ import ResourceLibrary from "./pages/ResourceLibrary.jsx"; // Import ResourceLib
 import InteractiveGuides from "./pages/InteractiveGuides.jsx"; // Import InteractiveGuides page
 import OrientationSessions from "./pages/OrientationSessions.jsx"; // Import OrientationSessions page
 import UserDashboard from "./pages/UserDashboard.jsx"; // Import UserDashboard page
+import ProjectDashboard from "./pages/ProjectDashboard.jsx"; // Import ProjectDashboard page
 
 const queryClient = new QueryClient();
 
@@ -94,6 +95,7 @@ const App = () => {
                 <Route path="interactive-guides" element={<InteractiveGuides />} />
                 <Route path="orientation-sessions" element={<OrientationSessions />} />
                 <Route path="user-dashboard" element={<UserDashboard />} />
+                <Route path="project-dashboard" element={<ProjectDashboard />} />
               </Route>
             </Routes>
           </Router>
