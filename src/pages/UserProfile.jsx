@@ -9,6 +9,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Textarea } from "@/components/ui/textarea";
 import { Badge } from "@/components/ui/badge";
+import { useUserProfile } from "@/integrations/supabase/index.js";
 
 const userProfileSchema = z.object({
   name: z.string().min(1, "Name is required"),
@@ -25,10 +26,11 @@ const userProfileSchema = z.object({
   ).optional(),
 });
 
-const UserProfile = () => {
+const UserProfile = ({ userId }) => {
   const [certifications, setCertifications] = useState([]);
   const [trustScore, setTrustScore] = useState(0);
   const [badges, setBadges] = useState([]);
+  const { data: userProfile, isLoading, error } = useUserProfile(userId);
 
   const form = useForm({
     resolver: zodResolver(userProfileSchema),
@@ -67,6 +69,9 @@ const UserProfile = () => {
     setBadges(assignBadges(score));
   };
 
+  if (isLoading) return <div>Loading...</div>;
+  if (error) return <div>Error loading user profile</div>;
+
   return (
     <div className="container mx-auto p-4">
       <Card>
@@ -83,7 +88,7 @@ const UserProfile = () => {
                   <FormItem>
                     <FormLabel>Name</FormLabel>
                     <FormControl>
-                      <Input placeholder="Name" {...field} />
+                      <Input placeholder="Name" {...field} defaultValue={userProfile.name} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -96,7 +101,7 @@ const UserProfile = () => {
                   <FormItem>
                     <FormLabel>Email</FormLabel>
                     <FormControl>
-                      <Input placeholder="Email" {...field} />
+                      <Input placeholder="Email" {...field} defaultValue={userProfile.email} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -109,7 +114,7 @@ const UserProfile = () => {
                   <FormItem>
                     <FormLabel>Phone</FormLabel>
                     <FormControl>
-                      <Input placeholder="Phone" {...field} />
+                      <Input placeholder="Phone" {...field} defaultValue={userProfile.phone} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -205,6 +210,38 @@ const UserProfile = () => {
                 </Badge>
               ))}
             </div>
+          </div>
+          <div className="mt-4">
+            <h2 className="text-xl font-semibold">Projects Managed</h2>
+            <ul>
+              {userProfile.projects_managed.map((project) => (
+                <li key={project.id}>{project.name}</li>
+              ))}
+            </ul>
+          </div>
+          <div className="mt-4">
+            <h2 className="text-xl font-semibold">Projects Contributed</h2>
+            <ul>
+              {userProfile.projects_contributed.map((project) => (
+                <li key={project.id}>{project.name}</li>
+              ))}
+            </ul>
+          </div>
+          <div className="mt-4">
+            <h2 className="text-xl font-semibold">Transactions Initiated</h2>
+            <ul>
+              {userProfile.transactions_initiated.map((transaction) => (
+                <li key={transaction.id}>{transaction.name}</li>
+              ))}
+            </ul>
+          </div>
+          <div className="mt-4">
+            <h2 className="text-xl font-semibold">Endorsements Received</h2>
+            <ul>
+              {userProfile.endorsements_received.map((endorsement) => (
+                <li key={endorsement.id}>{endorsement.name}</li>
+              ))}
+            </ul>
           </div>
         </CardContent>
       </Card>
