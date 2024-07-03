@@ -9,8 +9,10 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { cn } from "@/lib/utils";
-import { CircleUser, Menu, BookOpen, Home, User, UserPlus } from "lucide-react";
+import { CircleUser, Menu, BookOpen, Home, User, UserPlus, LogIn, Box } from "lucide-react";
 import { NavLink, Outlet } from "react-router-dom";
+import { useSupabaseAuth } from "@/integrations/supabase/auth.jsx"; // Import useSupabaseAuth
+
 const navItems = [
   {
     title: "Home",
@@ -27,17 +29,29 @@ const navItems = [
     to: "/register",
     icon: <UserPlus className="h-4 w-4" />,
   },
+  {
+    title: "Login", // Add Login to navigation
+    to: "/login",
+    icon: <LogIn className="h-4 w-4" />,
+  },
+  {
+    title: "Containers", // Add Container Management to navigation
+    to: "/containers",
+    icon: <Box className="h-4 w-4" />,
+  },
 ];
 
 const Layout = () => {
+  const { session, logout } = useSupabaseAuth(); // Get session and logout function
+
   return (
     <div className="grid min-h-screen w-full md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr]">
-      <Sidebar />
+      <Sidebar session={session} />
       <div className="flex flex-col">
         <header className="flex h-14 items-center gap-4 border-b bg-muted/40 px-4 lg:h-[60px] lg:px-6">
-          <MobileSidebar />
+          <MobileSidebar session={session} />
           <div className="w-full flex-1">{/* Add nav bar content here! */}</div>
-          <UserDropdown />
+          <UserDropdown session={session} logout={logout} />
         </header>
         <main className="flex-grow p-4 overflow-auto">
           <Outlet />
@@ -47,7 +61,7 @@ const Layout = () => {
   );
 };
 
-const Sidebar = () => (
+const Sidebar = ({ session }) => (
   <div className="hidden border-r bg-muted/40 md:block">
     <div className="flex h-full max-h-screen flex-col gap-2">
       <div className="flex h-14 items-center border-b px-4 lg:h-[60px] lg:px-6">
@@ -70,7 +84,7 @@ const Sidebar = () => (
   </div>
 );
 
-const MobileSidebar = () => (
+const MobileSidebar = ({ session }) => (
   <Sheet>
     <SheetTrigger asChild>
       <Button variant="outline" size="icon" className="shrink-0 md:hidden">
@@ -97,7 +111,7 @@ const MobileSidebar = () => (
   </Sheet>
 );
 
-const UserDropdown = () => (
+const UserDropdown = ({ session, logout }) => (
   <DropdownMenu>
     <DropdownMenuTrigger asChild>
       <Button variant="secondary" size="icon" className="rounded-full">
@@ -111,7 +125,11 @@ const UserDropdown = () => (
       <DropdownMenuItem>Settings</DropdownMenuItem>
       <DropdownMenuItem>Support</DropdownMenuItem>
       <DropdownMenuSeparator />
-      <DropdownMenuItem>Logout</DropdownMenuItem>
+      {session ? (
+        <DropdownMenuItem onClick={logout}>Logout</DropdownMenuItem>
+      ) : (
+        <DropdownMenuItem as={NavLink} to="/login">Login</DropdownMenuItem>
+      )}
     </DropdownMenuContent>
   </DropdownMenu>
 );
