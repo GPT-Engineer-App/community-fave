@@ -15,7 +15,7 @@ const Index = () => {
 
   return (
     <div className="text-center">
-      <h1 className="text-3xl font-bold mb-4">Welcome to The Faving Ecosystem</h1>
+      <h1 className="text-3xl font-bold mb-4">Welcome to WelcomeHub</h1>
       <p className="mb-6">Your go-to platform for secure and seamless file sharing and real-time collaboration.</p>
       <Button onClick={() => navigate("/fileflow")}>Explore FileFlow</Button>
       <div className="mt-4">

@@ -15,6 +15,7 @@ import TrustExpert from "./pages/TrustExpert.jsx"; // Import TrustExpert page
 import FileFlow from "./pages/FileFlow.jsx"; // Import FileFlow page
 import TradeCircle from "./pages/TradeCircle.jsx"; // Import TradeCircle page
 import ShareSphere from "./pages/ShareSphere.jsx"; // Import ShareSphere page
+import Onboarding from "./pages/Onboarding.jsx"; // Import Onboarding page
 
 const queryClient = new QueryClient();
 
@@ -54,6 +55,11 @@ export const navItems = [
     to: "/sharesphere",
     icon: <Box className="h-4 w-4" />,
   },
+  {
+    title: "Onboarding", // Add Onboarding to navigation
+    to: "/onboarding",
+    icon: <Box className="h-4 w-4" />,
+  },
 ];
 
 const App = () => {
@@ -75,6 +81,7 @@ const App = () => {
                 <Route path="fileflow" element={<FileFlow />} />
                 <Route path="tradecircle" element={<TradeCircle />} />
                 <Route path="sharesphere" element={<ShareSphere />} />
+                <Route path="onboarding" element={<Onboarding />} />
               </Route>
             </Routes>
           </Router>
