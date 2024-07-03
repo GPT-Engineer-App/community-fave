@@ -1,3 +1,4 @@
+```jsx
 import { createClient } from '@supabase/supabase-js';
 import { useQuery, useMutation, useQueryClient, QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
@@ -487,3 +488,13 @@ export const useDeleteMentorship = () => {
         },
     });
 };
+
+// Hooks for messages
+export const useMessages = () => useQuery({
+    queryKey: ['messages'],
+    queryFn: () => fromSupabase(supabase.from('messages').select('*')),
+});
+
+export const useMessage = (id) => useQuery({
+    queryKey: ['message', id],
+    queryFn: () => fromSupabase(supabase.from('messages').select('*
