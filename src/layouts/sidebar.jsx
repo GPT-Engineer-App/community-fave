@@ -79,6 +79,11 @@ const navItems = [
     to: "/progress-dashboard",
     icon: <Home className="h-4 w-4" />,
   },
+  {
+    title: "User Dashboard", // Add User Dashboard to navigation
+    to: "/user-dashboard",
+    icon: <Home className="h-4 w-4" />,
+  },
 ];
 
 const Layout = () => {
