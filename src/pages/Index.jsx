@@ -15,9 +15,9 @@ const Index = () => {
 
   return (
     <div className="text-center">
-      <h1 className="text-3xl font-bold mb-4">Welcome to KnowShare</h1>
-      <p className="mb-6">Your go-to platform for high-quality content and personalized learning paths.</p>
-      <Button onClick={() => navigate("/content")}>Explore Content</Button>
+      <h1 className="text-3xl font-bold mb-4">Welcome to The Faving Ecosystem</h1>
+      <p className="mb-6">Your go-to platform for secure and seamless file sharing and real-time collaboration.</p>
+      <Button onClick={() => navigate("/fileflow")}>Explore FileFlow</Button>
       <div className="mt-4">
         <h2 className="text-xl font-semibold">Example Container</h2>
         <p>Name: {exampleContainer.name}</p>
