@@ -1,12 +1,16 @@
 import { Toaster } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { Home, User } from "lucide-react";
+import { Home, User, LogIn, Box } from "lucide-react";
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import Layout from "./layouts/sidebar"; // available: default, navbar, sidebar
 import UserProfile from "./pages/UserProfile.jsx"; // Import UserProfile page
 import Index from "./pages/Index.jsx";
 import Register from "./pages/Register.jsx"; // Import Register page
+import Login from "./pages/Login.jsx"; // Import Login page
+import ContainerManagement from "./pages/ContainerManagement.jsx"; // Import ContainerManagement page
+import { SupabaseAuthProvider } from "./integrations/supabase/auth.jsx"; // Import SupabaseAuthProvider
+
 const queryClient = new QueryClient();
 
 export const navItems = [
@@ -20,6 +24,21 @@ export const navItems = [
     to: "/user-profile",
     icon: <User className="h-4 w-4" />,
   },
+  {
+    title: "Register", // Add Register to navigation
+    to: "/register",
+    icon: <User className="h-4 w-4" />,
+  },
+  {
+    title: "Login", // Add Login to navigation
+    to: "/login",
+    icon: <LogIn className="h-4 w-4" />,
+  },
+  {
+    title: "Containers", // Add Container Management to navigation
+    to: "/containers",
+    icon: <Box className="h-4 w-4" />,
+  },
 ];
 
 const App = () => {
@@ -27,15 +46,19 @@ const App = () => {
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
         <Toaster />
-        <Router>
-          <Routes>
-            <Route path="/" element={<Layout />}>
-              <Route index element={<Index />} />
-              <Route path="user-profile" element={<UserProfile />} />
-              <Route path="register" element={<Register />} /> {/* Add route for Register */}
-            </Route>
-          </Routes>
-        </Router>
+        <SupabaseAuthProvider>
+          <Router>
+            <Routes>
+              <Route path="/" element={<Layout />}>
+                <Route index element={<Index />} />
+                <Route path="user-profile" element={<UserProfile />} />
+                <Route path="register" element={<Register />} />
+                <Route path="login" element={<Login />} />
+                <Route path="containers" element={<ContainerManagement />} />
+              </Route>
+            </Routes>
+          </Router>
+        </SupabaseAuthProvider>
       </TooltipProvider>
     </QueryClientProvider>
   );

@@ -405,3 +405,44 @@ export const useDeleteUserProfile = () => {
         },
     });
 };
+
+// Hooks for containers
+export const useContainers = () => useQuery({
+    queryKey: ['containers'],
+    queryFn: () => fromSupabase(supabase.from('containers').select('*')),
+});
+
+export const useContainer = (id) => useQuery({
+    queryKey: ['container', id],
+    queryFn: () => fromSupabase(supabase.from('containers').select('*').eq('id', id).single()),
+});
+
+export const useAddContainer = () => {
+    const queryClient = useQueryClient();
+    return useMutation({
+        mutationFn: (newContainer) => fromSupabase(supabase.from('containers').insert([newContainer])),
+        onSuccess: () => {
+            queryClient.invalidateQueries('containers');
+        },
+    });
+};
+
+export const useUpdateContainer = () => {
+    const queryClient = useQueryClient();
+    return useMutation({
+        mutationFn: (updatedContainer) => fromSupabase(supabase.from('containers').update(updatedContainer).eq('id', updatedContainer.id)),
+        onSuccess: () => {
+            queryClient.invalidateQueries('containers');
+        },
+    });
+};
+
+export const useDeleteContainer = () => {
+    const queryClient = useQueryClient();
+    return useMutation({
+        mutationFn: (id) => fromSupabase(supabase.from('containers').delete().eq('id', id)),
+        onSuccess: () => {
+            queryClient.invalidateQueries('containers');
+        },
+    });
+};
