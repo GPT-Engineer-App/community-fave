@@ -59,6 +59,11 @@ const navItems = [
     to: "/tradecircle",
     icon: <Box className="h-4 w-4" />,
   },
+  {
+    title: "ShareSphere", // Add ShareSphere to navigation
+    to: "/sharesphere",
+    icon: <Box className="h-4 w-4" />,
+  },
 ];
 
 const Layout = () => {

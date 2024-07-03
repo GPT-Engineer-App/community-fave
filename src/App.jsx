@@ -14,6 +14,7 @@ import KnowShare from "./pages/KnowShare.jsx"; // Import KnowShare page
 import TrustExpert from "./pages/TrustExpert.jsx"; // Import TrustExpert page
 import FileFlow from "./pages/FileFlow.jsx"; // Import FileFlow page
 import TradeCircle from "./pages/TradeCircle.jsx"; // Import TradeCircle page
+import ShareSphere from "./pages/ShareSphere.jsx"; // Import ShareSphere page
 
 const queryClient = new QueryClient();
 
@@ -48,6 +49,11 @@ export const navItems = [
     to: "/fileflow",
     icon: <Box className="h-4 w-4" />,
   },
+  {
+    title: "ShareSphere", // Add ShareSphere to navigation
+    to: "/sharesphere",
+    icon: <Box className="h-4 w-4" />,
+  },
 ];
 
 const App = () => {
@@ -68,6 +74,7 @@ const App = () => {
                 <Route path="trustexpert" element={<TrustExpert />} />
                 <Route path="fileflow" element={<FileFlow />} />
                 <Route path="tradecircle" element={<TradeCircle />} />
+                <Route path="sharesphere" element={<ShareSphere />} />
               </Route>
             </Routes>
           </Router>
