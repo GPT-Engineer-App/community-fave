@@ -24,6 +24,11 @@ const Index = () => {
         <p>Description: {exampleContainer.description}</p>
         <p>Type: {exampleContainer.contentMetadata.type}</p>
       </div>
+      <div className="mt-4">
+        <Button onClick={() => navigate("/resource-library")}>Resource Library</Button>
+        <Button onClick={() => navigate("/interactive-guides")} className="ml-2">Interactive Guides</Button>
+        <Button onClick={() => navigate("/orientation-sessions")} className="ml-2">Orientation Sessions</Button>
+      </div>
     </div>
   );
 };
