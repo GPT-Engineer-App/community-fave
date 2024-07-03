@@ -74,6 +74,11 @@ const navItems = [
     to: "/mentorship-pairings",
     icon: <User className="h-4 w-4" />,
   },
+  {
+    title: "Progress Dashboard", // Add Progress Dashboard to navigation
+    to: "/progress-dashboard",
+    icon: <Home className="h-4 w-4" />,
+  },
 ];
 
 const Layout = () => {

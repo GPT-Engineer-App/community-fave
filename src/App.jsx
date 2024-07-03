@@ -17,6 +17,7 @@ import TradeCircle from "./pages/TradeCircle.jsx"; // Import TradeCircle page
 import ShareSphere from "./pages/ShareSphere.jsx"; // Import ShareSphere page
 import Onboarding from "./pages/Onboarding.jsx"; // Import Onboarding page
 import MentorshipPairings from "./pages/MentorshipPairings.jsx"; // Import MentorshipPairings page
+import ProgressDashboard from "./pages/ProgressDashboard.jsx"; // Import ProgressDashboard page
 
 const queryClient = new QueryClient();
 
@@ -84,6 +85,7 @@ const App = () => {
                 <Route path="sharesphere" element={<ShareSphere />} />
                 <Route path="onboarding" element={<Onboarding />} />
                 <Route path="mentorship-pairings" element={<MentorshipPairings />} />
+                <Route path="progress-dashboard" element={<ProgressDashboard />} />
               </Route>
             </Routes>
           </Router>
