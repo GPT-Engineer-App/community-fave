@@ -1,0 +1,12 @@
+version: 1
+repository: davlindh/community-fave
+purpose: Community-centered Fave and collaboration experiment.
+status: historical-reference
+canonical_parent: davlindh/faving-journey-shaper
+capabilities: [community, fave-container, collaboration]
+vertical: platform-research
+omniframez_role: community-capability-predecessor
+evidence: {confidence: inferred, sources: [repository-name, repository-history]}
+harvest_action: inspect-and-harvest-unique-capabilities
+relations:
+  - contributes_to: Faving community operating layer
